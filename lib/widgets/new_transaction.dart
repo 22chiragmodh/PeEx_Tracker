@@ -13,7 +13,7 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime _selectedDate;
+  DateTime? _selectedDate;
 
   void _submitData() {
     if (_amountController.text.isEmpty) {
@@ -59,7 +59,7 @@ class _NewTransactionState extends State<NewTransaction> {
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
@@ -84,26 +84,21 @@ class _NewTransactionState extends State<NewTransaction> {
                     child: Text(
                       _selectedDate == null
                           ? 'No Date Chosen!'
-                          : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
+                          : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}',
                     ),
                   ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Choose Date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: _presentDatePicker,
-                  ),
+                  IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: Icon(Icons.date_range)),
                 ],
               ),
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Add Transaction'),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).primaryColor,
+                onPrimary: Theme.of(context).textTheme.button!.color,
+              ),
               onPressed: _submitData,
             ),
           ],
